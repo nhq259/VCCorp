@@ -1,5 +1,5 @@
 module.exports = {
-  ok: (res, data) => {
+  success: (res, data) => {
     return res.status(200).send({
       success: true,
       data,

@@ -29,15 +29,15 @@
           <th style="width:160px;">Hành động</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let item of datas">
         <tr>
           <td>1</td>
-          <td><img src="https://via.placeholder.com/64" class="img-thumbnail" style="width:64px;height:64px;object-fit:cover"></td>
-          <td>Lys 41</td>
-          <td>100$</td>
-          <td><input type="number" class="form-control form-control-sm" value="14" readonly></td>
-          <td><span class="badge badge-success">Hoạt động</span></td>
-          <td class="text-muted small">07/08/2025 14:57:10</td>
+          <td><img src={{item.thumbnail}} class="img-thumbnail" style="width:64px;height:64px;object-fit:cover"></td>
+          <td>{{item.title}}</td>
+          <td>{{item.price}}</td>
+          <td><input type="number" class="form-control form-control-sm" value={{item.position}} readonly></td>
+          <td><span class="badge badge-success">{{item.status}}</span></td>
+          <td class="text-muted small">{{item.createdAt}}</td>
           <td>
             <div class="btn-group btn-group-sm">
               <button class="btn btn-secondary">Chi tiết</button>

@@ -6,10 +6,7 @@ const exampleController = require("modules/examples/controllers/exampleControlle
 const productController = require("modules/products/controllers/productController");
 
 // validations
-const {
-  createProductValidation,
-  updateProductValidation,
-} = require("modules/products/validations/productValidation");
+const productValidation = require("modules/products/validations/productValidation");
 
 const router = express.Router({ mergeParams: true });
 
@@ -25,12 +22,18 @@ router.group("/example", validate([]), (router) => {
   router.get("/", exampleController.exampleRequest);
 });
 
-router.group("/admin/products", validate([]), (router) => {
-  router.get("/", productController.index);
-  router.get("/:id", productController.detail);
-  router.post("/create", productController.create);
-  router.patch("/update/:id", productController.update);
-  router.delete("/delete/:id", productController.delete);
+
+router.group('/admin/products', validate([]), (router) => {
+  router.get('/', productController.index);
+  router.get('/detail/:id', productController.detail);
+
+  router.post('/create', productController.createPost);
+  router.patch('/edit/:id', productController.editPatch);
+  router.delete('/delete/:id', productController.deleteItem);
+
+  // // giữ kiểu routes cũ để FE quen dùng
+  router.patch('/change-status/:status/:id', productController.changeStatus);
+  // router.patch('/change-multi', productController.changeMulti);
 });
 
 module.exports = router;

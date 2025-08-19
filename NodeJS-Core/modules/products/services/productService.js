@@ -1,42 +1,81 @@
-const db = require("../../../models/index");
+// const { Op } = require('sequelize');
+// const db = require('models/index');
+// const Product = db.Product;
 
-const productService = {
-  // Lấy danh sách sản phẩm (chưa xóa)
-  list: async () => {
-    return await db.Product.findAll({
-      where: { deleted: false }
-    });
-  },
+// function buildQuery({ page = 1, limit = 10, search = '', status, sort = 'position:desc' }) {
+//   page = +page || 1;
+//   limit = +limit || 10;
 
-  // Lấy chi tiết sản phẩm
-  detail: async (id) => {
-    return await db.Product.findOne({
-      where: { id, deleted: false }
-    });
-  },
+//   const where = {};
+//   if (status) where.status = status;
+//   if (search) where.name = { [Op.like]: `%${search}%` };
 
-  // Tạo sản phẩm mới
-  create: async (payload) => {
-    return await db.Product.create(payload);
-  },
+//   const [field, dir = 'desc'] = String(sort).split(':');
+//   const order = field ? [[field, dir.toUpperCase()]] : [['position', 'DESC']];
 
-  update: async (id, payload) => {
-    const product = await db.Product.findByPk(id);
-    if (!product) throw new Error('Product not found');
+//   return { where, order, page, limit, offset: (page - 1) * limit };
+// }
 
-    Object.assign(product, payload);
+// async function list(query) {
+//   const { where, order, limit, offset, page } = buildQuery(query);
+//   const { rows, count } = await Product.findAndCountAll({ where, order, limit, offset });
+//   return { data: rows, meta: { page, limit, total: count } };
+// }
 
-    await product.save(); 
-    return product;
-  },
+// async function getById(id) {
+//   return Product.findByPk(id);
+// }
 
-  // Xóa mềm
-  softDelete: async (id) => {
-    return await db.Product.update(
-      { deleted: true },
-      { where: { id } }
-    );
-  }
-};
+// async function create(payload) {
+//   const { name, price, categoryId, thumbnail, status = 'active', position = 0 } = payload;
+//   return Product.create({ name, price, categoryId, thumbnail, status, position });
+// }
 
-module.exports = productService;
+// async function update(id, payload) {
+//   const item = await Product.findByPk(id);
+//   if (!item) return null;
+//   const { name, price, categoryId, thumbnail, status, position } = payload;
+//   await item.update({ name, price, categoryId, thumbnail, status, position });
+//   return item;
+// }
+
+// async function destroy(id) {
+//   const item = await Product.findByPk(id);
+//   if (!item) return 0;
+//   await item.destroy();
+//   return 1;
+// }
+
+// // giữ API quen thuộc
+// async function changeStatus(id, status) {
+//   const item = await Product.findByPk(id);
+//   if (!item) return null;
+//   await item.update({ status });
+//   return item;
+// }
+
+// async function changeMulti({ action, ids = [], value }) {
+//   if (!Array.isArray(ids) || ids.length === 0) return { affected: 0 };
+
+//   if (action === 'delete') {
+//     const affected = await Product.destroy({ where: { id: ids } });
+//     return { affected };
+//   }
+
+//   if (action === 'status') {
+//     const [affected] = await Product.update({ status: value }, { where: { id: ids } });
+//     return { affected };
+//   }
+
+//   return { affected: 0 };
+// }
+
+// module.exports = {
+//   list,
+//   getById,
+//   create,
+//   update,
+//   destroy,
+//   changeStatus,
+//   changeMulti,
+// };
